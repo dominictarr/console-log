@@ -14,7 +14,9 @@ module.exports = function (opts) {
   opts.margin = opts.margin || 30
   opts.style = opts.style || {height: '100%', width: '50%'}
   opts.template = opts.template || function (args) {
-    return h('pre', args.map(function (e) {
+    return h('pre', args.map(function (e, i) {
+      //stringify the first item, like regular console.log
+      if(!i) return String(e)
       try {
         return JSON.stringify(e, false, 2)
       } catch (e) {

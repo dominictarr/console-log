@@ -27,11 +27,6 @@ document.body.appendChild(logger.element)
 logger.write('hello')
 ```
 
-## API console-log/widget
-
-
-
-
 ## License
 
 MIT
