@@ -1,5 +1,6 @@
 var EventEmitter = require('events').EventEmitter
 var h = require('hyperscript')
+var o = require('observable')
 
 var log = console.log
 module.exports = function (opts) {
@@ -7,6 +8,7 @@ module.exports = function (opts) {
   //a writable stream does not need pipe.
   //so inherit from EventEmitter is okay.
   var emitter = new EventEmitter()
+  var follow = true
 
   opts.max = 10000
   opts.margin = opts.margin || 30
@@ -21,13 +23,33 @@ module.exports = function (opts) {
     }).join(' '))
   }
 
+
+  emitter.show = o()
+
   var inner  = h('div')
-  var logger = h('div', {style: opts.style}, {style: {overflow: 'scroll'}}, inner)
+  var logger = h('div', {style: opts.style},
+    {style: {
+      overflow: 'scroll',
+      display: o.boolean(emitter.show, 'block', 'none')
+    }},
+    inner)
+
+  emitter.follow = function () {
+    var el = inner.lastElementChild
+    el && el.scrollIntoViewIfNeeded()
+    follow = true
+  }
+
+  emitter.show(function (v) {
+    if(v && follow)
+      emitter.follow()
+  })
+
+  emitter.show(true)
 
   emitter.end = function () {}
   emitter.writable = true
 
-  emitter.follow = true
   emitter.log =
   emitter.write = function (data) {
     var message = opts.template(data)
@@ -35,13 +57,13 @@ module.exports = function (opts) {
     var bottom = inner.getBoundingClientRect().bottom
     var size   = logger.getBoundingClientRect().bottom
 
-    emitter.follow = bottom < size + opts.margin
+    follow = bottom < size + opts.margin
 
     inner.appendChild(message)
 
     //if there is too much data in the log, remove some stuff.
 
-    if(emitter.follow) {
+    if(follow && emitter.show()) {
       while(inner.clientHeight > opts.max && inner.children.length) {
         inner.removeChild(inner.firstChild)
       }

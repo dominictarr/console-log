@@ -1,6 +1,7 @@
 var center = require('center')
 var widget = require('./widget')
-var colapse = require('./colapse')
+var o      = require('observable')
+var h      = require('hyperscript')
 
 //create console.log if does not exist, i.e. IE.
 if('undefined' === typeof console) {
@@ -33,8 +34,25 @@ window.addEventListener('error', function (err) {
 
 document.body.appendChild(
   center(
-    colapse(emitter.element)
+    h('div',
+      {style: {background: 'white', border: '1px solid black' }},
+      emitter.element,
+      h('div',
+        o.boolean(emitter.show, '>', '<'),
+        {onclick: function () {
+          emitter.show(!emitter.show())
+        }},
+        {style: {
+          'margin': '10px',
+          'min-width': '20px',
+          'min-height': '20px',
+          'text-align': 'center'
+        }}
+      )
+    )
   )
 )
+
+emitter.show(false)
 
 module.exports = emitter
