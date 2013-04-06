@@ -9,6 +9,8 @@ Also, the bottom is sticky - _unlike chrome dev tools_ -
 so if you are scrolled to the bottom, output will track new messages,
 but if you scroll up, you can focus on old ones.
 
+USE WITH [BROWSERIFY](http://browserify.org)
+
 ## Example
 
 ``` js
