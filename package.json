@@ -1,0 +1,19 @@
+{
+  "name": "console-log",
+  "description": "",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dominictarr/console-log",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dominictarr/console-log.git"
+  },
+  "dependencies": {
+    "observable": "~1.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "set -e; for t in test/*.js; do node $t; done"
+  },
+  "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
+  "license": "MIT"
+}
