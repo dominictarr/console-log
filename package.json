@@ -8,7 +8,8 @@
     "url": "git://github.com/dominictarr/console-log.git"
   },
   "dependencies": {
-    "observable": "~1.4.2"
+    "observable": "~1.4.2",
+    "hyperscript": "~1.1.0"
   },
   "devDependencies": {},
   "scripts": {

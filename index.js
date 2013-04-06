@@ -1,4 +1,3 @@
-var center = require('center')
 var widget = require('./widget')
 var o      = require('observable')
 var h      = require('hyperscript')
@@ -33,22 +32,26 @@ window.addEventListener('error', function (err) {
 })
 
 document.body.appendChild(
-  center(
+  h('div',
+    {style: {
+      background: 'white',
+      border: '1px solid black',
+      position: 'fixed',
+      right: '20px',
+      bottom: '20px'
+    }},
+    emitter.element,
     h('div',
-      {style: {background: 'white', border: '1px solid black' }},
-      emitter.element,
-      h('div',
-        o.boolean(emitter.show, '>', '<'),
-        {onclick: function () {
-          emitter.show(!emitter.show())
-        }},
-        {style: {
-          'margin': '10px',
-          'min-width': '20px',
-          'min-height': '20px',
-          'text-align': 'center'
-        }}
-      )
+      o.boolean(emitter.show, '>', '<'),
+      {onclick: function () {
+        emitter.show(!emitter.show())
+      }},
+      {style: {
+        'margin': '10px',
+        'min-width': '20px',
+        'min-height': '20px',
+        'text-align': 'center'
+      }}
     )
   )
 )
